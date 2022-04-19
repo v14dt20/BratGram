@@ -85,6 +85,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         when(item.itemId) {
             R.id.settings_menu_exit -> {
                 AUTH.signOut()
+                AppStates.updateState(AppStates.OFFLINE)
                 APP_ACTIVITY.replaceActivity(RegisterActivity())
             }
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())

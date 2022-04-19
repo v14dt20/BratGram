@@ -26,4 +26,5 @@ class RegisterActivity : AppCompatActivity() {
         title = getString(R.string.register_title_your_phone)
         replaceFragment(EnterPhoneNumberFragment())
     }
+
 }
