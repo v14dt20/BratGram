@@ -54,7 +54,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         cropImage.launch(
             options {
                 setAspectRatio(1, 1)
-                setRequestedSize(600, 600)
+                setRequestedSize(250, 250)
                 setCropShape(CropImageView.CropShape.OVAL)
             }
         )

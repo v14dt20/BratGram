@@ -24,6 +24,7 @@ lateinit var USER: UserModel
 const val TYPE_TEXT = "text"
 
 const val FOLDER_PROFILE_IMAGE = "profile_image"
+const val FOLDER_MESSAGE_IMAGE = "message_image"
 
 const val NODE_USERS = "users"
 const val NODE_USERNAMES = "usernames"
@@ -42,6 +43,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
+const val CHILD_IMAGE_URL = "imageUrl"
 
 
 fun initFirebase() {
@@ -200,4 +202,24 @@ fun setNameToDatabase(fullname: String) {
                 APP_ACTIVITY.supportFragmentManager.popBackStack()
             }
         }
+}
+
+fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: String) {
+    val refDialogUser = "$NODE_MESSAGES/$CURREN_UID/$receivingUserID"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURREN_UID"
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = CURREN_UID
+    mapMessage[CHILD_TYPE] = TYPE_MESSAGE_IMAGE
+    mapMessage[CHILD_ID] = messageKey
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+    mapMessage[CHILD_IMAGE_URL] = imageUrl
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+    mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
+
+    REF_DATABASE_ROOT
+        .updateChildren(mapDialog)
+        .addOnFailureListener { showToast(it.message.toString()) }
 }

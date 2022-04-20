@@ -2,9 +2,13 @@ package com.example.bratgram.ui.fragments.single_chat
 
 import android.view.View
 import android.widget.AbsListView
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.options
 import com.example.bratgram.R
 import com.example.bratgram.models.CommonModel
 import com.example.bratgram.models.UserModel
@@ -15,6 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_single_chat.*
 import kotlinx.android.synthetic.main.toolbar_info.view.*
 
@@ -45,6 +50,45 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
     private fun initFields() {
         mSwipeRefreshLayout = chat_swipe_refresh
         mLayoutManager = LinearLayoutManager(this.context)
+        chat_input_message.addTextChangedListener(AppTextWatcher{
+            val string = chat_input_message.text.toString()
+            if (string.isEmpty()) {
+                chat_btn_send_message.visibility = View.GONE
+                chat_btn_attach.visibility = View.VISIBLE
+            } else {
+                chat_btn_send_message.visibility = View.VISIBLE
+                chat_btn_attach.visibility = View.GONE
+            }
+        })
+
+        chat_btn_attach.setOnClickListener { attachFile() }
+    }
+
+    private val cropImage = registerForActivityResult(CropImageContract()) {
+        if (it.isSuccessful) {
+            val uriContent = it.uriContent
+            val messageKey = REF_DATABASE_ROOT.child(NODE_MESSAGES).child(CURREN_UID).child(contact.id).push().key.toString()
+            val path = REF_STORAGE_ROOT.child(FOLDER_MESSAGE_IMAGE).child(messageKey)
+
+            if (uriContent != null) {
+                putImagetoStorage(uriContent, path) {
+                    getUrlFromStorage(path) {
+                        sendMessageAsImage(contact.id, it, messageKey)
+                        mSmoothScrollToPosition = true
+                    }
+                }
+            }
+        } else {
+            showToast("Error")
+        }
+    }
+    private fun attachFile() {
+        cropImage.launch(
+            options {
+                setAspectRatio(1, 1)
+                setRequestedSize(600, 600)
+            }
+        )
     }
 
     private fun initRecyclerView() {

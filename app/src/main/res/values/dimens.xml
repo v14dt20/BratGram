@@ -19,7 +19,8 @@
     <dimen name="smallText">14sp</dimen>
     <dimen name="vertical_large_margin">16dp</dimen>
     <dimen name="appPadding">10dp</dimen>
-
+    <dimen name="chat_image_width">180dp</dimen>
+    <dimen name="chat_image_height">180dp</dimen>
 
 
 </resources>
