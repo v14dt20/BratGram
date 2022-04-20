@@ -1,19 +1,11 @@
 package com.example.bratgram.ui.fragments
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.canhub.cropper.*
-import com.canhub.cropper.databinding.CropImageActivityBinding
-import com.example.bratgram.MainActivity
 import com.example.bratgram.R
-import com.example.bratgram.activities.RegisterActivity
 import com.example.bratgram.utilits.*
-import com.google.firebase.storage.StorageReference
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
@@ -77,7 +69,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             R.id.settings_menu_exit -> {
                 AUTH.signOut()
                 AppStates.updateState(AppStates.OFFLINE)
-                APP_ACTIVITY.replaceActivity(RegisterActivity())
+                restartActivity()
             }
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
         }

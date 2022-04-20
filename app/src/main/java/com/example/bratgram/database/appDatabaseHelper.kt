@@ -3,6 +3,8 @@ package com.example.bratgram.utilits
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.provider.ContactsContract
+import android.provider.Settings.Global.getString
+import com.example.bratgram.R
 import com.example.bratgram.models.CommonModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -151,4 +153,50 @@ fun sendMessage(message: String, receivingUserID: String, typeText: String, func
         .updateChildren(mapDialog)
         .addOnSuccessListener { function() }
         .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+fun updateCurrentUsername(newUsername: String) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURREN_UID).child(CHILD_USERNAME).setValue(newUsername)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                deleteOldUsername(newUsername)
+            } else {
+                showToast(it.exception?.message.toString())
+            }
+        }
+}
+
+private fun deleteOldUsername(newUsername: String) {
+    REF_DATABASE_ROOT.child(NODE_USERNAMES).child(USER.username).removeValue()
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+                APP_ACTIVITY.supportFragmentManager.popBackStack()
+                USER.username = newUsername
+            } else {
+                showToast(it.exception?.message.toString())
+            }
+        }
+}
+
+fun setBioToDatabase(newBio: String) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURREN_UID).child(CHILD_BIO).setValue(newBio).addOnCompleteListener {
+        if (it.isSuccessful) {
+            showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+            USER.bio = newBio
+            APP_ACTIVITY.supportFragmentManager.popBackStack()
+        }
+    }
+}
+
+fun setNameToDatabase(fullname: String) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURREN_UID).child(CHILD_FULLNAME)
+        .setValue(fullname).addOnCompleteListener {
+            if (it.isSuccessful) {
+                showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+                USER.fullname = fullname
+                APP_ACTIVITY.mAppDrawer.updateHeader()
+                APP_ACTIVITY.supportFragmentManager.popBackStack()
+            }
+        }
 }
