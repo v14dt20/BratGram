@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bratgram.R
 import com.example.bratgram.models.CommonModel
 import com.example.bratgram.utilits.CURREN_UID
+import com.example.bratgram.utilits.DiffUtilCallback
 import com.example.bratgram.utilits.asTime
 import kotlinx.android.synthetic.main.message_item.view.*
 import org.w3c.dom.Text
@@ -18,7 +20,8 @@ import java.util.*
 
 class SingleChatAdapter: RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
-    private var mListMessagesCache = emptyList<CommonModel>()
+    private var mListMessagesCache = mutableListOf<CommonModel>()
+    private lateinit var mDiffResult: DiffUtil.DiffResult
 
     class SingleChatHolder(view: View): RecyclerView.ViewHolder(view) {
         val blockUserMessage: ConstraintLayout = view.block_user_message
@@ -51,10 +54,21 @@ class SingleChatAdapter: RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder
 
     override fun getItemCount(): Int =  mListMessagesCache.size
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<CommonModel>) {
-        mListMessagesCache = list
-        notifyDataSetChanged()
+    fun addItemToBottom(item: CommonModel, onSuccess: () -> Unit) {
+        if (!mListMessagesCache.contains(item)) {
+            mListMessagesCache.add(item)
+            notifyItemInserted(mListMessagesCache.size)
+        }
+        onSuccess()
+    }
+
+    fun addItemToTop(item: CommonModel, onSuccess: () -> Unit) {
+        if (!mListMessagesCache.contains(item)) {
+            mListMessagesCache.add(item)
+            mListMessagesCache.sortBy { it.timeStamp.toString() }
+            notifyItemInserted(0)
+        }
+        onSuccess()
     }
 }
 
