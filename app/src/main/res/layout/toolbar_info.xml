@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/toolbar_chat_image"
+        android:layout_width="@dimen/toolbar_image_width"
+        android:layout_height="@dimen/toolbar_image_height"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/default_photo"
+        app:civ_circle_background_color="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/toolbar_chat_fullname"
+        style="@style/normalText"
+        android:textColor="@color/colorAccent"
+        tools:text="Vlad"
+        app:layout_constraintStart_toEndOf="@+id/toolbar_chat_image"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_chat_image"/>
+    <TextView
+        android:id="@+id/toolbar_chat_status"
+        style="@style/smallText"
+        android:textColor="@color/colorAccentDark"
+        tools:text="в сети"
+        app:layout_constraintStart_toEndOf="@+id/toolbar_chat_image"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_chat_fullname"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

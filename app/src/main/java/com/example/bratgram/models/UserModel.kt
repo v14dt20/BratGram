@@ -1,6 +1,6 @@
 package com.example.bratgram.models
 
-data class User(
+data class UserModel(
     val id: String = "",
     var username: String = "",
     var fullname: String = "",

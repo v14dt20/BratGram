@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/bg_receiving_message.xml" value="0.197" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/bg_user_message.xml" value="0.197" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/header.xml" value="0.1135" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/ic_btn_action_menu_change_name.xml" value="0.1755" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/ic_btn_action_menu_exit.xml" value="0.1755" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/ic_send.xml" value="0.197" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/ripple_effect.xml" value="0.1755" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/activity_main.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/activity_register.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/contact_item.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_change_bio.xml" value="0.27291666666666664" />
@@ -19,6 +22,9 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_enter_code.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_enter_phone_number.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_settings.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_single_chat.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/toolbar_info.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/menu/settings_action_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/menu/settings_menu_confirm.xml" value="0.27291666666666664" />
       </map>

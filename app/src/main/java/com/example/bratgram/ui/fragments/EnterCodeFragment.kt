@@ -41,7 +41,7 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) :
                 if (task.isSuccessful) {
                     val uid = AUTH.currentUser?.uid.toString()
                     val dateMap = mutableMapOf<String, Any>()
-                    dateMap[CHILD_ID] = uid
+                    dateMap[CHILD_ID] = CURREN_UID
                     dateMap[CHILD_PHONE] = phoneNumber
                     if (REF_DATABASE_ROOT.child(NODE_USERS).child(uid).child(CHILD_USERNAME).toString().isEmpty()) {
                         dateMap[CHILD_USERNAME] = uid
