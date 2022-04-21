@@ -7,7 +7,7 @@
     android:padding="@dimen/appPadding">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/block_received_voice_message"
+        android:id="@+id/block_received_file_message"
         android:visibility="visible"
         android:layout_width="@dimen/chat_common_width"
         android:layout_height="@dimen/chat_common_height"
@@ -17,39 +17,54 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/chat_received_btn_play"
+            android:id="@+id/chat_received_btn_download"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_play_blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/chat_received_btn_stop"
-            android:layout_width="@dimen/chat_btn_width"
-            android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_stop_blue"
-            android:visibility="gone"
+            android:layout_margin="@dimen/app_small_margin"
+            android:src="@drawable/ic_file_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/chat_received_voice_message_time"
+            android:id="@+id/chat_received_filename"
+            android:maxLines="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/chat_received_file_message_time"
+            app:layout_constraintStart_toEndOf="@+id/chat_received_btn_download"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/app_small_margin"/>
+
+        <TextView
+            android:id="@+id/chat_received_file_message_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="21:45"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/colorBlack"
             android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/app_small_margin"/>
 
+        <ProgressBar
+            android:id="@+id/chat_received_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:visibility="invisible"
+            android:layout_width="@dimen/chat_btn_width"
+            android:layout_height="@dimen/chat_btn_height"
+            android:layout_margin="@dimen/app_small_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="11dp"
+            tools:layout_editor_absoluteY="2dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/block_user_voice_message"
+        android:id="@+id/block_user_file_message"
         android:visibility="visible"
         android:layout_width="@dimen/chat_common_width"
         android:layout_height="@dimen/chat_common_height"
@@ -59,30 +74,45 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/chat_user_btn_play"
+            android:id="@+id/chat_user_btn_download"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_play_green"
+            android:layout_margin="@dimen/app_small_margin"
+            android:src="@drawable/ic_file_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/chat_user_btn_stop"
+        <ProgressBar
+            android:id="@+id/chat_user_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:visibility="invisible"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_stop_green"
-            android:visibility="gone"
+            android:layout_margin="@dimen/app_small_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="11dp"
+            tools:layout_editor_absoluteY="2dp" />
 
         <TextView
-            android:id="@+id/chat_user_voice_message_time"
+            android:id="@+id/chat_user_filename"
+            android:maxLines="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/chat_user_file_message_time"
+            app:layout_constraintStart_toEndOf="@+id/chat_user_btn_download"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/app_small_margin"/>
+
+        <TextView
+            android:id="@+id/chat_user_file_message_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="21:45"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/colorBlack"
             android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

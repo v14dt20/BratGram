@@ -18,6 +18,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/drawable/ripple_effect.xml" value="0.1755" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/activity_register.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/choise_uppload.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/contact_item.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_change_bio.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_change_name.xml" value="0.27291666666666664" />
@@ -30,6 +31,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_settings.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_single_chat.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item_file.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item_image.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item_text.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item_voice.xml" value="0.27291666666666664" />
