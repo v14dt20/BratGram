@@ -26,4 +26,6 @@
     <string name="toast_data_update">Данные обновлены</string>
     <string name="setting_hint_input_username">Username</string>
     <string name="settings_input_bio">Bio</string>
+    <string name="clear_chat">Очистить чат</string>
+    <string name="delete_chat">Удалить чат</string>
 </resources>

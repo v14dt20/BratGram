@@ -10,7 +10,7 @@ import com.example.bratgram.database.initContacts
 import com.example.bratgram.database.initFirebase
 import com.example.bratgram.database.initUser
 import com.example.bratgram.databinding.ActivityMainBinding
-import com.example.bratgram.ui.screens.MainFragment
+import com.example.bratgram.ui.screens.main_list.MainListFragment
 import com.example.bratgram.ui.screens.register.EnterPhoneNumberFragment
 import com.example.bratgram.ui.objects.AppDrawer
 import com.example.bratgram.utilits.*
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
             mAppDrawer.create()
-            replaceFragment(MainFragment(), false)
+            replaceFragment(MainListFragment(), false)
         } else {
             replaceFragment(EnterPhoneNumberFragment(), false)
         }
@@ -57,6 +57,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        AppStates.updateState(AppStates.ONLINE)
+    }
+
+    override fun onResume() {
+        super.onResume()
         AppStates.updateState(AppStates.ONLINE)
     }
 

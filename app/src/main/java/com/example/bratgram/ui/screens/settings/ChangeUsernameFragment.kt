@@ -1,7 +1,8 @@
-package com.example.bratgram.ui.screens
+package com.example.bratgram.ui.screens.settings
 
 import com.example.bratgram.R
 import com.example.bratgram.database.*
+import com.example.bratgram.ui.screens.BaseChangeFragment
 import com.example.bratgram.utilits.*
 import kotlinx.android.synthetic.main.fragment_change_username.*
 import java.util.*

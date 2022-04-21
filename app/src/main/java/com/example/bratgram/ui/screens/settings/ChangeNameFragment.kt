@@ -1,8 +1,9 @@
-package com.example.bratgram.ui.screens
+package com.example.bratgram.ui.screens.settings
 
 import com.example.bratgram.R
 import com.example.bratgram.database.USER
 import com.example.bratgram.database.setNameToDatabase
+import com.example.bratgram.ui.screens.BaseChangeFragment
 import com.example.bratgram.utilits.*
 import kotlinx.android.synthetic.main.fragment_change_name.*
 

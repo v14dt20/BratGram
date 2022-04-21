@@ -2,7 +2,7 @@ package com.example.bratgram.ui.screens.register
 
 import androidx.fragment.app.Fragment
 import com.example.bratgram.R
-import com.example.bratgram.database.AUTH
+import com.example.bratgram.database.*
 import com.example.bratgram.utilits.*
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -26,8 +26,28 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 AUTH.signInWithCredential(credential).addOnCompleteListener(APP_ACTIVITY) { task ->
                     if (task.isSuccessful) {
-                        showToast("Добро пожаловать!")
-                        restartActivity()
+                        val uid = AUTH.currentUser?.uid.toString()
+                        val dateMap = mutableMapOf<String, Any>()
+                        dateMap[CHILD_ID] = uid
+                        dateMap[CHILD_PHONE] = mPhoneNumber
+
+                        REF_DATABASE_ROOT.child(NODE_USERS).child(uid)
+                            .addListenerForSingleValueEvent(AppValueEventListener{
+                                if (!it.hasChild(CHILD_USERNAME)) {
+                                    dateMap[CHILD_USERNAME] = uid
+                                }
+                                REF_DATABASE_ROOT.child(NODE_PHONES).child(mPhoneNumber).setValue(uid)
+                                    .addOnFailureListener { showToast(it.message.toString()) }
+                                    .addOnSuccessListener {
+                                        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+                                            .addOnSuccessListener {
+                                                AppStates.updateState(AppStates.ONLINE)
+                                                showToast("Добро пожаловать!")
+                                                restartActivity()
+                                            }
+                                            .addOnFailureListener { showToast(it.message.toString()) }
+                                    }
+                            })
                     } else showToast(task.exception?.message.toString())
                 }
             }
@@ -64,6 +84,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                 .setCallbacks(mCallback)
                 .build()
         )
+        FirebaseAuth.getInstance().firebaseAuthSettings
     }
 
 }

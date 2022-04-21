@@ -1,4 +1,4 @@
-package com.example.bratgram.ui.screens
+package com.example.bratgram.ui.screens.settings
 
 import android.view.Menu
 import android.view.MenuInflater
@@ -6,6 +6,7 @@ import android.view.MenuItem
 import com.canhub.cropper.*
 import com.example.bratgram.R
 import com.example.bratgram.database.*
+import com.example.bratgram.ui.screens.BaseFragment
 import com.example.bratgram.utilits.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 

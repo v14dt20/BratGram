@@ -30,6 +30,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_enter_phone_number.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_settings.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/fragment_single_chat.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/main_list_item.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item_file.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/message_item_image.xml" value="0.27291666666666664" />
@@ -38,6 +39,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/layout/toolbar_info.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/menu/settings_action_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/menu/settings_menu_confirm.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/BratGram/app/src/main/res/menu/single_chat_action_menu.xml" value="0.27291666666666664" />
       </map>
     </option>
   </component>
