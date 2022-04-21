@@ -1,7 +1,8 @@
-package com.example.bratgram.ui.screens
+package com.example.bratgram.ui.screens.base
 
 import android.view.*
 import com.example.bratgram.R
+import com.example.bratgram.ui.screens.base.BaseFragment
 import com.example.bratgram.utilits.APP_ACTIVITY
 import com.example.bratgram.utilits.hideKeyboard
 

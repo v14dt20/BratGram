@@ -1,4 +1,4 @@
-package com.example.bratgram.ui.screens.single_chat
+package com.example.bratgram.ui.screens.groups
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -30,14 +30,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layout.fragment_single_chat) {
+class GroupChatFragment(private val contact: CommonModel) : BaseFragment(R.layout.fragment_single_chat) {
 
     private lateinit var mListenerInfoToolbar: AppValueEventListener
     private lateinit var mReceivingUser: UserModel
     private lateinit var mToolbarInfo: View
     private lateinit var mRefUser: DatabaseReference
     private lateinit var mRefMessages: DatabaseReference
-    private lateinit var mAdapter: SingleChatAdapter
+    private lateinit var mAdapter: GroupChatAdapter
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mMessagesListener: AppChildEventListener
     private var mCountMessages = 15
@@ -133,10 +133,10 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
 
     private fun initRecyclerView() {
         mRecyclerView = chat_recycle_view
-        mAdapter = SingleChatAdapter()
-        mRefMessages = REF_DATABASE_ROOT.child(NODE_MESSAGES)
-            .child(CURREN_UID)
+        mAdapter = GroupChatAdapter()
+        mRefMessages = REF_DATABASE_ROOT.child(NODE_GROUPS)
             .child(contact.id)
+            .child(NODE_MESSAGES)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.isNestedScrollingEnabled = false
@@ -196,8 +196,7 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
             val message = chat_input_message.text.toString()
             if (message.isEmpty()) {
                 showToast("Введите сообщение")
-            } else sendMessage(message, contact.id, TYPE_TEXT) {
-                saveToMainList(contact.id, TYPE_CHAT)
+            } else sendMessageToGroup(message, contact.id, TYPE_TEXT) {
                 chat_input_message.setText("")
             }
         }

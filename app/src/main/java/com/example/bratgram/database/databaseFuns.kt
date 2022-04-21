@@ -180,7 +180,13 @@ fun setNameToDatabase(fullname: String) {
         }
 }
 
-fun sendMessageAsFile(receivingUserID: String, fileUrl: String, messageKey: String, typeMessage: String, filename: String) {
+fun sendMessageAsFile(
+    receivingUserID: String,
+    fileUrl: String,
+    messageKey: String,
+    typeMessage: String,
+    filename: String
+) {
     val refDialogUser = "$NODE_MESSAGES/$CURREN_UID/$receivingUserID"
     val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURREN_UID"
 
@@ -205,7 +211,13 @@ fun getMessageKey(id: String) =
     REF_DATABASE_ROOT.child(NODE_MESSAGES).child(CURREN_UID).child(id)
         .push().key.toString()
 
-fun uploadFileToStorage(uri: Uri, messageKey: String, receivedID: String, typeMessage: String, filename: String = "") {
+fun uploadFileToStorage(
+    uri: Uri,
+    messageKey: String,
+    receivedID: String,
+    typeMessage: String,
+    filename: String = ""
+) {
     val path = REF_STORAGE_ROOT.child(FOLDER_FILES).child(messageKey)
 
     putFiletoStorage(uri, path) {
@@ -253,8 +265,87 @@ fun clearChat(id: String, function: () -> Unit) {
     REF_DATABASE_ROOT.child(NODE_MESSAGES).child(CURREN_UID).child(id)
         .removeValue()
         .addOnFailureListener { showToast(it.message.toString()) }
-        .addOnSuccessListener { REF_DATABASE_ROOT.child(NODE_MESSAGES).child(id).child(CURREN_UID)
-            .removeValue()
-            .addOnSuccessListener { function() }
+        .addOnSuccessListener {
+            REF_DATABASE_ROOT.child(NODE_MESSAGES).child(id).child(CURREN_UID)
+                .removeValue()
+                .addOnSuccessListener { function() }
         }
+}
+
+fun createGroupToDatabase(
+    nameGroup: String,
+    mUri: Uri,
+    listContacts: List<CommonModel>,
+    function: () -> Unit
+) {
+    val keyGroup = REF_DATABASE_ROOT.child(NODE_GROUPS).push().key.toString()
+    val path = REF_DATABASE_ROOT.child(NODE_GROUPS).child(keyGroup)
+
+    val mapData = hashMapOf<String, Any>()
+    mapData[CHILD_ID] = keyGroup
+    mapData[CHILD_FULLNAME] = nameGroup
+    mapData[CHILD_PHOTO_URL] = "empty"
+
+    val mapMembers = hashMapOf<String, Any>()
+    listContacts.forEach {
+        mapMembers[it.id] = USER_MEMBER
+    }
+    mapMembers[CURREN_UID] = USER_CREATOR
+
+    mapData[NODE_MEMBERS] = mapMembers
+
+    path.updateChildren(mapData)
+        .addOnSuccessListener {
+            if (mUri != Uri.EMPTY) {
+                putFiletoStorage(
+                    mUri,
+                    REF_STORAGE_ROOT.child(FOLDER_GROUPS_IMAGE).child(keyGroup)
+                ) {
+                    getUrlFromStorage(
+                        REF_STORAGE_ROOT.child(FOLDER_GROUPS_IMAGE).child(keyGroup)
+                    ) { it ->
+                        path.child(CHILD_PHOTO_URL).setValue(it)
+                        addGroupsToMainList(mapData, listContacts) { function() }
+                    }
+                }
+            } else {
+                addGroupsToMainList(mapData, listContacts) {
+                    function()
+                }
+            }
+        }
+        .addOnFailureListener { showToast(it.message.toString()) }
+
+
+}
+
+fun addGroupsToMainList(mapData: HashMap<String, Any>, listContacts: List<CommonModel>, function: () -> Unit) {
+    val path = REF_DATABASE_ROOT.child(NODE_MAIN_LIST)
+    val map = hashMapOf<String, Any>()
+    map[CHILD_ID] = mapData[CHILD_ID].toString()
+    map[CHILD_TYPE] = TYPE_GROUP
+    listContacts.forEach {
+        path.child(it.id).child(map[CHILD_ID].toString()).updateChildren(map)
+    }
+    path.child(CURREN_UID).child(map[CHILD_ID].toString()).updateChildren(map)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+fun sendMessageToGroup(message: String, groupID: String, typeText: String, function: () -> Unit) {
+
+    var refMessages = "$NODE_GROUPS/$groupID/$NODE_MESSAGES"
+    val messageKey = REF_DATABASE_ROOT.child(refMessages).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = CURREN_UID
+    mapMessage[CHILD_TYPE] = typeText
+    mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_ID] = messageKey.toString()
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+
+    REF_DATABASE_ROOT.child(refMessages).child(messageKey.toString())
+        .updateChildren(mapMessage)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
 }

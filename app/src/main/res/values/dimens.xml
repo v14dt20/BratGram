@@ -27,6 +27,8 @@
     <dimen name="chat_btn_height">50dp</dimen>
     <dimen name="bottom_sheet_height">70dp</dimen>
     <dimen name="btn_bottom_sheet_width">50dp</dimen>
+    <dimen name="add_contacts_item_choice_width">25dp</dimen>
+    <dimen name="add_contacts_item_choice_height">25dp</dimen>
 
 
 </resources>
