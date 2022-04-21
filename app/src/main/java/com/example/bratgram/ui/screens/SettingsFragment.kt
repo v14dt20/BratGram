@@ -1,10 +1,11 @@
-package com.example.bratgram.ui.fragments
+package com.example.bratgram.ui.screens
 
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.canhub.cropper.*
 import com.example.bratgram.R
+import com.example.bratgram.database.*
 import com.example.bratgram.utilits.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -15,7 +16,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_IMAGE).child(CURREN_UID)
 
             if (uriContent != null) {
-                putImagetoStorage(uriContent, path) {
+                putFiletoStorage(uriContent, path) {
                     getUrlFromStorage(path) {
                         putUrlToDatabase(it) {
                             settings_user_photo.downloadAndSetImage(it)

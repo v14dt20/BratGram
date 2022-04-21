@@ -1,8 +1,8 @@
-package com.example.bratgram.ui.fragments.register
+package com.example.bratgram.ui.screens.register
 
 import androidx.fragment.app.Fragment
-import com.example.bratgram.MainActivity
 import com.example.bratgram.R
+import com.example.bratgram.database.*
 import com.example.bratgram.utilits.*
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_enter_code.*
@@ -33,23 +33,24 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) :
                     val dateMap = mutableMapOf<String, Any>()
                     dateMap[CHILD_ID] = uid
                     dateMap[CHILD_PHONE] = phoneNumber
-                    if (REF_DATABASE_ROOT.child(NODE_USERS).child(uid).child(CHILD_USERNAME).toString().isEmpty()) {
-                        dateMap[CHILD_USERNAME] = uid
-                    }
 
-                    REF_DATABASE_ROOT.child(NODE_PHONES).child(phoneNumber).setValue(uid)
-                        .addOnFailureListener { showToast(it.message.toString()) }
-                        .addOnSuccessListener {
-                            REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
-                                .addOnSuccessListener {
-                                    AppStates.updateState(AppStates.ONLINE)
-                                    showToast("Добро пожаловать!")
-                                    restartActivity()
-                                }
+                    REF_DATABASE_ROOT.child(NODE_USERS).child(uid)
+                        .addListenerForSingleValueEvent(AppValueEventListener{
+                            if (!it.hasChild(CHILD_USERNAME)) {
+                                dateMap[CHILD_USERNAME] = uid
+                            }
+                            REF_DATABASE_ROOT.child(NODE_PHONES).child(phoneNumber).setValue(uid)
                                 .addOnFailureListener { showToast(it.message.toString()) }
-                        }
-
-
+                                .addOnSuccessListener {
+                                    REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+                                        .addOnSuccessListener {
+                                            AppStates.updateState(AppStates.ONLINE)
+                                            showToast("Добро пожаловать!")
+                                            restartActivity()
+                                        }
+                                        .addOnFailureListener { showToast(it.message.toString()) }
+                                }
+                        })
                 } else showToast(task.exception?.message.toString())
 
             }

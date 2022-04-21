@@ -1,9 +1,6 @@
-package com.example.bratgram.ui.fragments
+package com.example.bratgram.ui.screens
 
-import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
-import com.example.bratgram.MainActivity
 import com.example.bratgram.R
 import com.example.bratgram.utilits.APP_ACTIVITY
 import com.example.bratgram.utilits.hideKeyboard

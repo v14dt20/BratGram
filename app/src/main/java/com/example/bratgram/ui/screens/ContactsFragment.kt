@@ -1,4 +1,4 @@
-package com.example.bratgram.ui.fragments
+package com.example.bratgram.ui.screens
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bratgram.R
+import com.example.bratgram.database.*
 import com.example.bratgram.models.CommonModel
-import com.example.bratgram.ui.fragments.single_chat.SingleChatFragment
+import com.example.bratgram.ui.screens.single_chat.SingleChatFragment
 import com.example.bratgram.utilits.*
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions

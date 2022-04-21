@@ -1,4 +1,4 @@
-package com.example.bratgram.ui.fragments
+package com.example.bratgram.ui.screens
 
 import androidx.fragment.app.Fragment
 import com.example.bratgram.R

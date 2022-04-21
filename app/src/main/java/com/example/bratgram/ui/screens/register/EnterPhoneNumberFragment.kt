@@ -1,8 +1,8 @@
-package com.example.bratgram.ui.fragments.register
+package com.example.bratgram.ui.screens.register
 
 import androidx.fragment.app.Fragment
-import com.example.bratgram.MainActivity
 import com.example.bratgram.R
+import com.example.bratgram.database.AUTH
 import com.example.bratgram.utilits.*
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth

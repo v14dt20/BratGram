@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.example.bratgram.database.AUTH
+import com.example.bratgram.database.initContacts
+import com.example.bratgram.database.initFirebase
+import com.example.bratgram.database.initUser
 import com.example.bratgram.databinding.ActivityMainBinding
-import com.example.bratgram.ui.fragments.MainFragment
-import com.example.bratgram.ui.fragments.register.EnterPhoneNumberFragment
+import com.example.bratgram.ui.screens.MainFragment
+import com.example.bratgram.ui.screens.register.EnterPhoneNumberFragment
 import com.example.bratgram.ui.objects.AppDrawer
 import com.example.bratgram.utilits.*
 import kotlinx.coroutines.CoroutineScope

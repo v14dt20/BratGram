@@ -1,27 +1,30 @@
-package com.example.bratgram.ui.fragments.single_chat
+package com.example.bratgram.ui.screens.single_chat
 
+import android.annotation.SuppressLint
+import android.net.Uri
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AbsListView
-import androidx.core.widget.addTextChangedListener
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.CropImageView
 import com.canhub.cropper.options
 import com.example.bratgram.R
+import com.example.bratgram.database.*
 import com.example.bratgram.models.CommonModel
 import com.example.bratgram.models.UserModel
-import com.example.bratgram.ui.fragments.BaseFragment
+import com.example.bratgram.ui.screens.BaseFragment
+import com.example.bratgram.ui.message_recycler_view.views.AppViewFactory
 import com.example.bratgram.utilits.*
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_single_chat.*
 import kotlinx.android.synthetic.main.toolbar_info.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layout.fragment_single_chat) {
@@ -39,6 +42,7 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
     private var mSmoothScrollToPosition = true
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var mAppVoiceRecorder: AppVoiceRecorder
 
     override fun onResume() {
         super.onResume()
@@ -47,39 +51,56 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         initRecyclerView()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        mAppVoiceRecorder = AppVoiceRecorder()
         mSwipeRefreshLayout = chat_swipe_refresh
         mLayoutManager = LinearLayoutManager(this.context)
         chat_input_message.addTextChangedListener(AppTextWatcher{
             val string = chat_input_message.text.toString()
-            if (string.isEmpty()) {
+            if (string.isEmpty() || string == "Record") {
                 chat_btn_send_message.visibility = View.GONE
                 chat_btn_attach.visibility = View.VISIBLE
+                chat_btn_voice.visibility = View.VISIBLE
             } else {
                 chat_btn_send_message.visibility = View.VISIBLE
                 chat_btn_attach.visibility = View.GONE
+                chat_btn_voice.visibility = View.GONE
             }
         })
 
         chat_btn_attach.setOnClickListener { attachFile() }
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            chat_btn_voice.setOnTouchListener { v, event ->
+                if (checkPermission(RECORD_AUDIO)) {
+                    if (event.action == MotionEvent.ACTION_DOWN) {
+                        chat_input_message.setText("Record")
+                        chat_btn_voice.setColorFilter(ContextCompat.getColor(APP_ACTIVITY, R.color.colorPrimary))
+                        val messageKey = getMessageKey(contact.id)
+                        mAppVoiceRecorder.startRecord(messageKey)
+                    } else if (event.action == MotionEvent.ACTION_UP) {
+                        chat_input_message.setText("")
+                        chat_btn_voice.colorFilter = null
+                        mAppVoiceRecorder.stopRecord { file, messageKey ->
+                            uploadFileToStorage(Uri.fromFile(file), messageKey, contact.id, TYPE_MESSAGE_VOICE)
+                            mSmoothScrollToPosition = true }
+                    }
+                }
+                true
+            }
+        }
     }
 
     private val cropImage = registerForActivityResult(CropImageContract()) {
         if (it.isSuccessful) {
             val uriContent = it.uriContent
-            val messageKey = REF_DATABASE_ROOT.child(NODE_MESSAGES).child(CURREN_UID).child(contact.id).push().key.toString()
-            val path = REF_STORAGE_ROOT.child(FOLDER_MESSAGE_IMAGE).child(messageKey)
-
+            val messageKey = getMessageKey(contact.id)
             if (uriContent != null) {
-                putImagetoStorage(uriContent, path) {
-                    getUrlFromStorage(path) {
-                        sendMessageAsImage(contact.id, it, messageKey)
-                        mSmoothScrollToPosition = true
-                    }
-                }
+                uploadFileToStorage(uriContent, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
+                mSmoothScrollToPosition = true
             }
-        } else {
-            showToast("Error")
         }
     }
     private fun attachFile() {
@@ -104,11 +125,11 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         mMessagesListener = AppChildEventListener {
             val message = it.getCommonModel()
             if (mSmoothScrollToPosition) {
-                mAdapter.addItemToBottom(message) {
+                mAdapter.addItemToBottom(AppViewFactory.getView(message)) {
                     mRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
                 }
             } else {
-                    mAdapter.addItemToTop(message) {
+                    mAdapter.addItemToTop(AppViewFactory.getView(message)) {
                         mSwipeRefreshLayout.isRefreshing = false
                     }
                 }
@@ -180,6 +201,12 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
     override fun onStop() {
         super.onStop()
         hideKeyboard()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mAppVoiceRecorder.releaseRecorder()
+        mAdapter.onDestroy()
     }
 
 }

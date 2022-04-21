@@ -1,7 +1,8 @@
-package com.example.bratgram.ui.fragments
+package com.example.bratgram.ui.screens
 
 import com.example.bratgram.R
-import com.example.bratgram.utilits.*
+import com.example.bratgram.database.USER
+import com.example.bratgram.database.setBioToDatabase
 import kotlinx.android.synthetic.main.fragment_change_bio.*
 
 class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {

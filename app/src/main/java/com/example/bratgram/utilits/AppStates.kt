@@ -1,5 +1,7 @@
 package com.example.bratgram.utilits
 
+import com.example.bratgram.database.*
+
 enum class AppStates (val state: String) {
     ONLINE("В сети"),
     OFFLINE("Был недавно"),

@@ -1,11 +1,6 @@
-package com.example.bratgram.ui.fragments
+package com.example.bratgram.ui.screens
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.bratgram.MainActivity
 import com.example.bratgram.utilits.APP_ACTIVITY
 
 

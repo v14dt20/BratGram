@@ -4,13 +4,12 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.bratgram.R
-import com.example.bratgram.ui.fragments.ContactsFragment
-import com.example.bratgram.ui.fragments.SettingsFragment
+import com.example.bratgram.ui.screens.ContactsFragment
+import com.example.bratgram.ui.screens.SettingsFragment
 import com.example.bratgram.utilits.APP_ACTIVITY
-import com.example.bratgram.utilits.USER
+import com.example.bratgram.database.USER
 import com.example.bratgram.utilits.downloadAndSetImage
 import com.example.bratgram.utilits.replaceFragment
 import com.mikepenz.materialdrawer.AccountHeader
